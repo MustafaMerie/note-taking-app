@@ -1,7 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css"
 import { useMemo } from "react"
 import { Container } from "react-bootstrap"
-import { Routes, Route, Navigate } from "react-router-dom"
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom"
 import { NewNote } from "./NewNote"
 import { useLocalStorage } from "./useLocalStorage"
 import { v4 as uuid } from "uuid"
@@ -41,6 +41,8 @@ function App() {
   const [notes, setNotes] = useLocalStorage<RowNote[]>("NOTES", [])
   const [tags, setTags] = useLocalStorage<Tag[]>("TAGS", [])
 
+  const navigate = useNavigate()
+
   const notesWithTags = useMemo(() => {
     return notes.map(note => {
       return { ...note, tags: tags.filter(tag => note.tagIds.includes(tag.id)) }
@@ -67,9 +69,12 @@ function App() {
   }
 
   function onDeleteNote(id: string) {
-    setNotes(prevNotes => {
-      return prevNotes.filter(note => note.id !== id)
-    })
+    if (window.confirm("Delete this note?")) {
+      setNotes(prevNotes => {
+        return prevNotes.filter(note => note.id !== id)
+      })
+      navigate("/")
+    }
   }
 
 
