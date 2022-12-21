@@ -35,7 +35,7 @@ export function NoteForm({ onSubmit, onAddTag, availableTags, title = "", markdo
                 <Col>
                     <Form.Group controlId="title">
                         <Form.Label>Title</Form.Label>
-                        <Form.Control ref={titleRef} required defaultValue={title} />
+                        <Form.Control ref={titleRef} required defaultValue={title} placeholder="Enter title" />
                     </Form.Group>
                 </Col>
 

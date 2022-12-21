@@ -65,7 +65,7 @@ export function NotesList({ availableTags, notes, onUpdateTag, onDeleteTag }: No
                 <Col>
                     <Form.Group controlId="title">
                         <Form.Label>Title</Form.Label>
-                        <Form.Control type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
+                        <Form.Control type="text" placeholder="Search by title" value={title} onChange={(e) => setTitle(e.target.value)} />
                     </Form.Group>
                 </Col>
                 <Col>
@@ -91,6 +91,9 @@ export function NotesList({ availableTags, notes, onUpdateTag, onDeleteTag }: No
                 </Col>
             </Row>
         </Form>
+        {
+            !filteredNotes.length && <h6 className="text-center mt-5">No notes found.</h6>
+        }
         <Row xs={1} sm={2} lg={3} xl={4} className="g-3">
             {
                 filteredNotes.map(note => (
