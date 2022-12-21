@@ -20,11 +20,14 @@ export function NotesList({ availableTags, notes }: NoteListProps) {
     const [selectedTags, setSelectedTags] = useState<Tag[]>([])
     const [title, setTitle] = useState("")
 
-    const filterdNotes = useMemo(() => {
+    const filteredNotes = useMemo(() => {
         return notes.filter(note => {
-            return (title === '' || note.title.toLocaleLowerCase().includes(title.toLocaleLowerCase())) && selectedTags.length === 0 || selectedTags.every(tag => (
+            return (title === '' || 
+            note.title.toLowerCase().includes(title.toLowerCase())) && 
+            (selectedTags.length === 0 || selectedTags.every(tag => (
                 note.tags.some(noteTag => (noteTag.id === tag.id))
             ))
+            )
         })
     }, [title, selectedTags, notes])
 
@@ -75,7 +78,7 @@ export function NotesList({ availableTags, notes }: NoteListProps) {
         </Form>
         <Row xs={1} sm={2} lg={3} xl={4} className="g-3">
             {
-                filterdNotes.map(note => (
+                filteredNotes.map(note => (
                     <Col id={note.id}>
                         <NoteCard id={note.id} title={note.title} tags={note.tags} />
                     </Col>
