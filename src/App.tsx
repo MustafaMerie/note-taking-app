@@ -8,6 +8,7 @@ import { v4 as uuid } from "uuid"
 import { NotesList } from "./NotesList"
 import { NoteLayout } from "./NoteLayout"
 import { Note } from "./Note"
+import { EditNote } from "./EditNote"
 
 export type Note = {
   id: string
@@ -52,6 +53,26 @@ function App() {
     })
   }
 
+  function onEditNote(id: string, { tags, ...data }: NoteData) {
+    setNotes(prevNotes => {
+      return prevNotes.map(note => {
+        if (note.id === id) {
+          return { ...note, ...data, tagIds: tags.map(tag => tag.id) }
+        }
+        else {
+          return note
+        }
+      })
+    })
+  }
+
+  function onDeleteNote(id: string) {
+    setNotes(prevNotes => {
+      return prevNotes.filter(note => note.id !== id)
+    })
+  }
+
+
   function addTag(tag: Tag) {
     setTags(prev => [...prev, tag])
   }
@@ -62,8 +83,8 @@ function App() {
         <Route path="/" element={<NotesList notes={notesWithTags} availableTags={tags} />} />
         <Route path="/new" element={<NewNote onSubmit={onCreateNote} onAddTag={addTag} availableTags={tags} />} />
         <Route path="/:id" element={<NoteLayout notes={notesWithTags} />}>
-          <Route index element={<Note />} />
-          <Route path="edit" element={<div>Edit</div>} />
+          <Route index element={<Note onDelete={onDeleteNote} />} />
+          <Route path="edit" element={<EditNote onSubmit={onEditNote} onAddTag={addTag} availableTags={tags} />} />
         </Route>
         <Route path="*" element={<Navigate to="/" />} />
 
