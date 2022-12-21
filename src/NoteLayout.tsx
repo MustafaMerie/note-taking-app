@@ -16,6 +16,6 @@ export function NoteLayout({ notes }: NoteLayoutProps) {
 
 }
 
-function useNote() {
-    return useOutletContext<Note[]>()
+export function useNote() {
+    return useOutletContext<Note>()
 }
