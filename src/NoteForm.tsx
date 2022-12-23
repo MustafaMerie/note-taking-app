@@ -1,4 +1,4 @@
-import { useRef, useState } from "react"
+import { FormEvent, useRef, useState } from "react"
 import { Button, Col, Form, Row, Stack } from "react-bootstrap"
 import { Link, useNavigate } from "react-router-dom"
 import CreatableReactSelect from "react-select/creatable"
@@ -19,7 +19,7 @@ export function NoteForm({ onSubmit, onAddTag, availableTags, title = "", markdo
 
     const navigate = useNavigate()
 
-    function handleSubmit(e: FocusEvent) {
+    function handleSubmit(e: FormEvent) {
         e.preventDefault()
         onSubmit({
             title: titleRef.current!.value,
